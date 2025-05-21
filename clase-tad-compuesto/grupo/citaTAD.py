@@ -81,6 +81,12 @@ def modFecha(cita, nuevaFecha):
     #Modifica la fecha de la cita
     cita[4] = nuevaFecha
 
+
 def modHora(cita, nuevaHora):
     #Modifica la hora de la cita
     cita[5] = nuevaHora
+
+def modFechaMasivo(citas, fechaNueva):
+    #Modifica todas las citas de una fecha especifica a otra.
+    for cita in citas:
+        cita[4] = fechaNueva

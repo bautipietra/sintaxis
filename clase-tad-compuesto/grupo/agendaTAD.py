@@ -3,6 +3,7 @@ TAD AGENDA
 
 La agenda es una lista de citas
 """
+from agendaTAD import *
 
 agenda = []
 
@@ -19,12 +20,30 @@ def eliminarCita(agenda, cita):
     #elimina una cita de la agenda
     agenda.remove(cita)
 
+def eliminarCitaPorObraSocial(agenda, obra):
+    #elimina todas las citas que correspondan a una obra social específica
+    i = 0
+    while i < len(agenda):
+        if agenda[i][2] == obra:
+            agenda.pop(i)
+        else:
+            i += 1
+    return agenda
+
 def obtenerCita(agenda, i):
     #retorna la cita en la posición i
-    if (i >= tamanioAgenda(agenda)):
+    if (i > tamanioAgenda(agenda)):
         return "No se encontró una cita en esa posición"
     else:
-        return agenda[i]
+        return agenda[i-1]
+
+def obtenerCitaPorDNI(agenda, dni):
+    #retorna la cita en la posición i
+    for cita in agenda:
+        if cita[0] == dni:
+            print(cita)
+            return cita
+    return "No se encontró una cita con ese DNI"
 
 def obtenerTodasLasCitas(agenda):
     #retorna todas las citas de la agenda
@@ -42,6 +61,6 @@ def obtenerCitasPorFecha(agenda, fecha):
     #retorna una lista con las citas de una fecha específica
     citasFecha = []
     for cita in agenda:
-        if verFecha(cita) == fecha:
+        if cita[4] == fecha:
             citasFecha.append(cita)
     return citasFecha

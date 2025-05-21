@@ -121,6 +121,26 @@ def seleccionarOpcion():
             print(bcolors.OKGREEN + "\n¡Cita eliminada exitosamente!" + bcolors.ENDC)
 
     elif (option == 7):
+        dni = input("\nModificar cita por el DNI del paciente: ")
+        cita = obtenerCitaPorDNI(agenda, dni)
+        nuevaFecha = input("\nIngrese la nueva fecha (DD/MM/AAAA): ")
+        modFecha(cita, nuevaFecha)
+        nuevaHora = input("\nIngrese la nueva hora (HH:MM): ")
+        modHora(cita, nuevaHora)
+        print(bcolors.OKGREEN + "\n¡Cita modificada exitosamente!" + bcolors.ENDC)
+       
+    elif (option == 8):
+           fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
+           fechaNueva = input("\nIngrese la fecha nueva (DD/MM/AAAA): ")
+           citas = obtenerCitasPorFecha(agenda, fecha)
+           modFechaMasivo(citas, fechaNueva)
+
+    elif (option == 9):
+        obra = input("\nIngrese la obra social: ")
+        eliminarCitaPorObraSocial(agenda, obra)
+        print(bcolors.OKGREEN + "\n¡Citas eliminadas exitosamente!" + bcolors.ENDC)
+
+    elif (option == 10):
         print(bcolors.OKGREEN + "\nGracias por usar nuestra aplicación, ¡nos vemos pronto!" + bcolors.ENDC)
         print("Saliendo...")
         return
@@ -136,7 +156,10 @@ def menu():
     print("4. Mostrar citas por fecha")
     print("5. Modificar cita")
     print("6. Eliminar cita")
-    print("7. Salir")
+    print("7. Modificar cita por DNI")
+    print("8. Mover todas las citas de una fecha a otra")
+    print("9. Eliminar todas las citas de una obra social")
+    print("10. Salir")
     seleccionarOpcion()
 
 menu()
