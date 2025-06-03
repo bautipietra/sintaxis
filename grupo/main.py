@@ -1,6 +1,7 @@
 import pyfiglet
 from agendaTAD import *
 from citaTAD import *
+from colaTAD import *
 
 # Crear textos de colores
 class bcolors:
@@ -17,7 +18,7 @@ class bcolors:
 agenda = crearAgenda()
 
 def seleccionarOpcion():
-    option = int(input("\nSeleccione una opción (1-7): "))
+    option = int(input("\nSeleccione una opción (1-11): "))
 
     if (option == 1):
         print(bcolors.OKBLUE + "\nIngrese los datos para crear la cita\n")
@@ -141,6 +142,12 @@ def seleccionarOpcion():
         print(bcolors.OKGREEN + "\n¡Citas eliminadas exitosamente!" + bcolors.ENDC)
 
     elif (option == 10):
+        fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
+        cola = crearCola()
+        encolarPorFecha(agenda,cola, fecha)
+        imprimirCola(cola)
+
+    elif (option == 11):
         print(bcolors.OKGREEN + "\nGracias por usar nuestra aplicación, ¡nos vemos pronto!" + bcolors.ENDC)
         print("Saliendo...")
         return
@@ -149,7 +156,7 @@ def seleccionarOpcion():
     menu()
 
 def menu():
-    print(pyfiglet.figlet_format("Agenda Médica"))
+    print(pyfiglet.figlet_format("Agenda Medica"))
     print("1. Crear cita")
     print("2. Mostrar todas las citas")
     print("3. Mostrar cita por índice")
@@ -159,7 +166,8 @@ def menu():
     print("7. Modificar cita por DNI")
     print("8. Mover todas las citas de una fecha a otra")
     print("9. Eliminar todas las citas de una obra social")
-    print("10. Salir")
+    print("10. Mostrar citas en cola por fecha")
+    print("11. Salir")
     seleccionarOpcion()
 
 menu()

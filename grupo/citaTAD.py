@@ -10,9 +10,6 @@ Propiedades:
 - hora (índice 5)
 """
 
-cita = ["", "", "", "", "", ""]
-    #dni, nombre, obraSocial, telefono, fecha, hora
-
 def crearCita():
     #crea una cita vacía
     cita = ["", "", "", "", "", ""]
