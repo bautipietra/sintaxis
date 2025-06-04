@@ -8,6 +8,7 @@ Propiedades:
 - teléfono (índice 3)
 - fecha (índice 4)
 - hora (índice 5)
+
 """
 
 def crearCita():
@@ -18,21 +19,21 @@ def crearCita():
 def cargarCita(cita, dni, nom, obraSoc, tel, fec, hor):
     #carga una nueva cita
     #[dni, nombre, obraSocial, telefono, fecha, hora]
-    cita[0] = dni
-    cita[1] = nom
-    cita[2] = obraSoc
-    cita[3] = tel
-    cita[4] = fec
-    cita[5] = hor
+    modDNI(cita, dni)
+    modNombre(cita, nom)
+    modObraSocial(cita, obraSoc)
+    modTelefono(cita, tel)
+    modFecha(cita, fec)
+    modHora(cita, hor)
 
 def asignarCita(cita1, cita2):
     #copia los datos de cita1 a cita2
-    cita2[0] = cita1[0]
-    cita2[1] = cita1[1]
-    cita2[2] = cita1[2]
-    cita2[3] = cita1[3]
-    cita2[4] = cita1[4]
-    cita2[5] = cita1[5]
+    modDNI(cita2, verDNI(cita1))
+    modNombre(cita2, verNombre(cita1))
+    modObraSocial(cita2, verObraSocial(cita1))
+    modTelefono(cita2, verTelefono(cita1))
+    modFecha(cita2, verFecha(cita1))
+    modHora(cita2, verHora(cita1))
 
 def verDNI(cita):
     #Retorna el DNI del paciente
@@ -83,7 +84,17 @@ def modHora(cita, nuevaHora):
     #Modifica la hora de la cita
     cita[5] = nuevaHora
 
-def modFechaMasivo(citas, fechaNueva):
-    #Modifica todas las citas de una fecha especifica a otra.
+def mostrarCita(cita):
+    #Muestra los datos de la cita
+    print("\nDatos de la cita:")
+    print(f"DNI: {verDNI(cita)}")
+    print(f"Nombre: {verNombre(cita)}")
+    print(f"Obra Social: {verObraSocial(cita)}")
+    print(f"Teléfono: {verTelefono(cita)}")
+    print(f"Fecha: {verFecha(cita)}")
+    print(f"Hora: {verHora(cita)}")
+
+def recorrerCitas(citas):
+    #recorre todas las citas de la agenda
     for cita in citas:
-        cita[4] = fechaNueva
+        mostrarCita(cita)
