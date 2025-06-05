@@ -22,10 +22,6 @@ def eliminarCita(agenda, cita):
 def obtenerCita(agenda, i):
         return agenda[i-1]
 
-def obtenerTodasLasCitas(agenda):
-    #retorna todas las citas de la agenda
-    return agenda
-
 def tamanioAgenda(agenda):
     #retorna la cantidad de citas en la agenda
     return len(agenda)

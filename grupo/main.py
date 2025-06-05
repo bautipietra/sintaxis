@@ -15,6 +15,36 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+def mostrarCita(cita):
+    #Muestra los datos de la cita
+    print("\nDatos de la cita:")
+    print(f"DNI: {verDNI(cita)}")
+    print(f"Nombre: {verNombre(cita)}")
+    print(f"Obra Social: {verObraSocial(cita)}")
+    print(f"Teléfono: {verTelefono(cita)}")
+    print(f"Fecha: {verFecha(cita)}")
+    print(f"Hora: {verHora(cita)}")
+
+def recorrerCitas(citas):
+    #recorre todas las citas de la agenda
+    for cita in citas:
+        mostrarCita(cita)
+    
+def obtenerTodasLasCitas(agenda):
+    #retorna todas las citas de la agenda
+    citas = []
+    for i in range(tamanioAgenda(agenda)):
+        cita = obtenerCita(agenda, i)
+        citas.append(cita)
+    return citas
+
+def mostrarCola(cola):
+    #imprime la cola
+    print("\n")
+    print("Cola:")
+    for i in range(tamanio(cola)):
+        print(desencolar(cola))
+
 agenda = crearAgenda()
 
 def seleccionarOpcion():
@@ -54,15 +84,13 @@ def seleccionarOpcion():
         fecha = input("\nIngrese la fecha a buscar (DD/MM/AAAA): ")
         citas = obtenerTodasLasCitas(agenda)
         citasFecha = []
+        print(bcolors.OKBLUE + f"\nCitas para el {fecha}:" + bcolors.ENDC)
         for i in range(tamanioAgenda(agenda)):
             cita = obtenerCita(agenda, i)
             if verFecha(cita) == fecha:
-                citasFecha.append(cita)
+                mostrarCita(cita)
         if not citasFecha:
             print("No hay citas para esa fecha")
-        else:
-            print(bcolors.OKBLUE + f"\nCitas para el {fecha}:" + bcolors.ENDC)
-            recorrerCitas(citasFecha)
 
     elif (option == 5):
         i = int(input("\nIngrese el índice de la cita a modificar: "))
@@ -105,6 +133,7 @@ def seleccionarOpcion():
         if isinstance(cita, str):
             print(bcolors.FAIL + cita + bcolors.ENDC)
         else:
+            mostrarCita(cita)
             eliminarCita(agenda, cita)
             print(bcolors.OKGREEN + "\n¡Cita eliminada exitosamente!" + bcolors.ENDC)
 
@@ -133,24 +162,28 @@ def seleccionarOpcion():
 
     elif (option == 9):
         obra = input("\nIngrese la obra social: ")
-        for i in range(tamanioAgenda(agenda)):
+        i = 0
+        contador = 0
+        while i < tamanioAgenda(agenda):
             cita = obtenerCita(agenda, i)
             if verObraSocial(cita) == obra:
+                contador += 1
+                mostrarCita(cita)
                 eliminarCita(agenda, cita)
                 print(bcolors.OKGREEN + "\n¡Cita eliminada exitosamente!" + bcolors.ENDC)
-                break
-        else:
-            print(bcolors.FAIL + "No se encontró una cita con esa obra social" + bcolors.ENDC)
+            i += 1
+        if contador == 0:
+            print(bcolors.FAIL + "No se encontró ninguna cita con esa obra social" + bcolors.ENDC)
+
 
     elif (option == 10):
         fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
         cola = crearCola()
-        citas = obtenerTodasLasCitas(agenda)
         for i in range(tamanioAgenda(agenda)):
             cita = obtenerCita(agenda, i)
             if verFecha(cita) == fecha:
                 encolar(cola, cita)
-        imprimirCola(cola)
+        mostrarCola(cola)
 
     elif (option == 11):
         print(bcolors.OKGREEN + "\nGracias por usar nuestra aplicación, ¡nos vemos pronto!" + bcolors.ENDC)

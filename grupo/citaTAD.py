@@ -83,18 +83,3 @@ def modFecha(cita, nuevaFecha):
 def modHora(cita, nuevaHora):
     #Modifica la hora de la cita
     cita[5] = nuevaHora
-
-def mostrarCita(cita):
-    #Muestra los datos de la cita
-    print("\nDatos de la cita:")
-    print(f"DNI: {verDNI(cita)}")
-    print(f"Nombre: {verNombre(cita)}")
-    print(f"Obra Social: {verObraSocial(cita)}")
-    print(f"Teléfono: {verTelefono(cita)}")
-    print(f"Fecha: {verFecha(cita)}")
-    print(f"Hora: {verHora(cita)}")
-
-def recorrerCitas(citas):
-    #recorre todas las citas de la agenda
-    for cita in citas:
-        mostrarCita(cita)

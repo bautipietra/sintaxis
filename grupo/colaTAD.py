@@ -31,9 +31,3 @@ def copiarCola(cola1,cola2):
     for elem in cola1:
         encolar(cola2, elem)
     return cola2
-
-def imprimirCola(cola):
-    #Imprime los elementos de la cola
-    print("\n")
-    print("Cola:")
-    print(cola)
