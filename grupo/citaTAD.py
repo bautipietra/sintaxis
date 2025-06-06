@@ -10,10 +10,11 @@ Propiedades:
 - hora (índice 5)
 
 """
+from datetime import datetime, time
 
 def crearCita():
     #crea una cita vacía
-    cita = ["", "", "", "", "", ""]
+    cita = ["", "", "", "", None, None]
     return cita
 
 def cargarCita(cita, dni, nom, obraSoc, tel, fec, hor):
@@ -52,12 +53,14 @@ def verTelefono(cita):
     return cita[3]
 
 def verFecha(cita):
-    #Retorna la fecha de la cita
-    return cita[4]
+    #Retorna la fecha de la cita en formato DD/MM/AAAA
+    fecha = cita[4]
+    return fecha.strftime("%d/%m/%Y") if fecha else ""
 
 def verHora(cita):
-    #Retorna la hora de la cita
-    return cita[5]
+    #Retorna la hora de la cita en formato HH:MM
+    hora = cita[5]
+    return hora.strftime("%H:%M") if hora else ""
 
 def modDNI(cita, nuevoDNI):
     #Modifica el DNI del paciente
@@ -77,9 +80,15 @@ def modTelefono(cita, nuevoTelefono):
 
 def modFecha(cita, nuevaFecha):
     #Modifica la fecha de la cita
-    cita[4] = nuevaFecha
-
+    if nuevaFecha:
+        cita[4] = datetime.strptime(nuevaFecha, "%d/%m/%Y")
+    else:
+        cita[4] = None
 
 def modHora(cita, nuevaHora):
     #Modifica la hora de la cita
-    cita[5] = nuevaHora
+    if nuevaHora:
+        hora_obj = datetime.strptime(nuevaHora, "%H:%M").time()
+        cita[5] = hora_obj
+    else:
+        cita[5] = None

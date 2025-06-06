@@ -2,6 +2,7 @@ import pyfiglet
 from agendaTAD import *
 from citaTAD import *
 from colaTAD import *
+from datetime import datetime, time
 
 # Crear textos de colores
 class bcolors:
@@ -42,8 +43,12 @@ def mostrarCola(cola):
     #imprime la cola
     print("\n")
     print("Cola:")
-    for i in range(tamanio(cola)):
-        print(desencolar(cola))
+    if (esVacia(cola)):
+        print("No hay citas en esa fecha. \n")
+    else:
+        while not esVacia(cola):
+            cita = desencolar(cola)
+            print(verNombre(cita) + " - " + verObraSocial(cita) + "\n")
 
 agenda = crearAgenda()
 
@@ -57,8 +62,24 @@ def seleccionarOpcion():
         nombre = input("Ingrese el nombre del paciente: ")
         obraSocial = input("Ingrese la obra social: ")
         telefono = input("Ingrese el teléfono: ")
-        fecha = input("Ingrese la fecha (DD/MM/AAAA): ")
-        hora = input("Ingrese la hora (HH:MM): ")
+        while True:
+            try:
+                fecha = input("Ingrese la fecha (DD/MM/AAAA): ")
+                # Validar el formato de la fecha
+                datetime.strptime(fecha, "%d/%m/%Y")
+                break
+            except ValueError:
+                print(bcolors.FAIL + "Formato de fecha inválido. Use DD/MM/AAAA" + bcolors.ENDC)
+        
+        while True:
+            try:
+                hora = input("Ingrese la hora (HH:MM): ")
+                # Validar el formato de la hora
+                datetime.strptime(hora, "%H:%M")
+                break
+            except ValueError:
+                print(bcolors.FAIL + "Formato de hora inválido. Use HH:MM" + bcolors.ENDC)
+        
         cargarCita(cita, dni, nombre, obraSocial, telefono, fecha, hora)
         agregarCita(agenda, cita)
         print(bcolors.OKGREEN + "\n¡Cita agregada exitosamente!" + bcolors.ENDC)
@@ -81,16 +102,19 @@ def seleccionarOpcion():
                 mostrarCita(cita)
 
     elif (option == 4):
-        fecha = input("\nIngrese la fecha a buscar (DD/MM/AAAA): ")
-        citas = obtenerTodasLasCitas(agenda)
-        citasFecha = []
-        print(bcolors.OKBLUE + f"\nCitas para el {fecha}:" + bcolors.ENDC)
-        for i in range(tamanioAgenda(agenda)):
-            cita = obtenerCita(agenda, i)
-            if verFecha(cita) == fecha:
-                mostrarCita(cita)
-        if not citasFecha:
-            print("No hay citas para esa fecha")
+        fecha_buscar = input("\nIngrese la fecha a buscar (DD/MM/AAAA): ")
+        try:
+            contadorCitas = 0
+            print(bcolors.OKBLUE + f"\nCitas para el {fecha_buscar}:" + bcolors.ENDC)
+            for i in range(tamanioAgenda(agenda)):
+                cita = obtenerCita(agenda, i)
+                if verFecha(cita) == fecha_buscar:
+                    mostrarCita(cita)
+                    contadorCitas += 1
+            if contadorCitas == 0:
+                print("No hay citas para esa fecha")
+        except ValueError:
+            print(bcolors.FAIL + "Formato de fecha inválido. Use DD/MM/AAAA" + bcolors.ENDC)
 
     elif (option == 5):
         i = int(input("\nIngrese el índice de la cita a modificar: "))
@@ -120,11 +144,23 @@ def seleccionarOpcion():
                 nuevoTelefono = input("\nIngrese el nuevo teléfono: ")
                 modTelefono(cita, nuevoTelefono)
             elif op == 5:
-                nuevaFecha = input("\nIngrese la nueva fecha (DD/MM/AAAA): ")
-                modFecha(cita, nuevaFecha)
+                while True:
+                    try:
+                        nuevaFecha = input("\nIngrese la nueva fecha (DD/MM/AAAA): ")
+                        datetime.strptime(nuevaFecha, "%d/%m/%Y")
+                        modFecha(cita, nuevaFecha)
+                        break
+                    except ValueError:
+                        print(bcolors.FAIL + "Formato de fecha inválido. Use DD/MM/AAAA" + bcolors.ENDC)
             elif op == 6:
-                nuevaHora = input("\nIngrese la nueva hora (HH:MM): ")
-                modHora(cita, nuevaHora)
+                while True:
+                    try:
+                        nuevaHora = input("\nIngrese la nueva hora (HH:MM): ")
+                        datetime.strptime(nuevaHora, "%H:%M")
+                        modHora(cita, nuevaHora)
+                        break
+                    except ValueError:
+                        print(bcolors.FAIL + "Formato de hora inválido. Use HH:MM" + bcolors.ENDC)
             print(bcolors.OKGREEN + "\n¡Cita modificada exitosamente!" + bcolors.ENDC)
 
     elif (option == 6):
@@ -142,23 +178,42 @@ def seleccionarOpcion():
         for i in range(tamanioAgenda(agenda)):
             cita = obtenerCita(agenda, i)
             if verDNI(cita) == dni:
-                nuevaFecha = input("\nIngrese la nueva fecha (DD/MM/AAAA): ")
-                modFecha(cita, nuevaFecha)
-                nuevaHora = input("\nIngrese la nueva hora (HH:MM): ")
-                modHora(cita, nuevaHora)
+                while True:
+                    try:
+                        nuevaFecha = input("\nIngrese la nueva fecha (DD/MM/AAAA): ")
+                        datetime.strptime(nuevaFecha, "%d/%m/%Y")
+                        modFecha(cita, nuevaFecha)
+                        break
+                    except ValueError:
+                        print(bcolors.FAIL + "Formato de fecha inválido. Use DD/MM/AAAA" + bcolors.ENDC)
+                
+                while True:
+                    try:
+                        nuevaHora = input("\nIngrese la nueva hora (HH:MM): ")
+                        datetime.strptime(nuevaHora, "%H:%M")
+                        modHora(cita, nuevaHora)
+                        break
+                    except ValueError:
+                        print(bcolors.FAIL + "Formato de hora inválido. Use HH:MM" + bcolors.ENDC)
                 print(bcolors.OKGREEN + "\n¡Cita modificada exitosamente!" + bcolors.ENDC)
                 break
         else:
             print(bcolors.FAIL + "No se encontró una cita con ese DNI" + bcolors.ENDC)
        
     elif (option == 8):
-        fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
-        fechaNueva = input("\nIngrese la fecha nueva (DD/MM/AAAA): ")
-        for i in range(tamanioAgenda(agenda)):
-            cita = obtenerCita(agenda, i)
-            if verFecha(cita) == fecha:
-                modFecha(cita, fechaNueva)
-        print(bcolors.OKGREEN + "\n¡Citas modificadas exitosamente!" + bcolors.ENDC)
+        while True:
+            try:
+                fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
+                fechaNueva = input("\nIngrese la fecha nueva (DD/MM/AAAA): ")
+                datetime.strptime(fechaNueva, "%d/%m/%Y")
+                for i in range(tamanioAgenda(agenda)):
+                    cita = obtenerCita(agenda, i)
+                    if verFecha(cita) == fecha:
+                        modFecha(cita, fechaNueva)
+                print(bcolors.OKGREEN + "\n¡Citas modificadas exitosamente!" + bcolors.ENDC)
+                break
+            except ValueError:
+                print(bcolors.FAIL + "Formato de fecha inválido. Use DD/MM/AAAA" + bcolors.ENDC)
 
     elif (option == 9):
         obra = input("\nIngrese la obra social: ")
@@ -177,13 +232,18 @@ def seleccionarOpcion():
 
 
     elif (option == 10):
-        fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
-        cola = crearCola()
-        for i in range(tamanioAgenda(agenda)):
-            cita = obtenerCita(agenda, i)
-            if verFecha(cita) == fecha:
-                encolar(cola, cita)
-        mostrarCola(cola)
+        while True:
+            try:
+                fecha = input("\nIngrese la fecha de las citas (DD/MM/AAAA): ")
+                cola = crearCola()
+                for i in range(tamanioAgenda(agenda)):
+                    cita = obtenerCita(agenda, i)
+                    if verFecha(cita) == fecha:
+                        encolar(cola, cita)
+                mostrarCola(cola)
+                break
+            except ValueError:
+                print(bcolors.FAIL + "Formato de fecha inválido. Use DD/MM/AAAA" + bcolors.ENDC)
 
     elif (option == 11):
         print(bcolors.OKGREEN + "\nGracias por usar nuestra aplicación, ¡nos vemos pronto!" + bcolors.ENDC)
