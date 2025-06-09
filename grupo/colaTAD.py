@@ -2,8 +2,6 @@
 Generar una nueva cola que contenga únicamente los nombres y obras sociales de los pacientes citados en un día específico, e imprimirla inmediatamente en pantalla.
  """
 
-from citaTAD import *
-
 def crearCola():
     #Crea una cola vacia
     return []

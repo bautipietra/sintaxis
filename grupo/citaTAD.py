@@ -10,7 +10,7 @@ Propiedades:
 - hora (índice 5)
 
 """
-from datetime import datetime, time
+from datetime import datetime
 
 def crearCita():
     #crea una cita vacía

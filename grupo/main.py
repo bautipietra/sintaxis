@@ -2,7 +2,7 @@ import pyfiglet
 from agendaTAD import *
 from citaTAD import *
 from colaTAD import *
-from datetime import datetime, time
+from datetime import datetime
 
 # Crear textos de colores
 class bcolors:

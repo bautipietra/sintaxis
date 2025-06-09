@@ -4,8 +4,6 @@ TAD AGENDA
 La agenda es una lista de citas
 """
 
-from citaTAD import *
-
 def crearAgenda():
     #crea una agenda vacía
     agenda = []
