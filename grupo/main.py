@@ -226,10 +226,10 @@ def seleccionarOpcion():
                 mostrarCita(cita)
                 eliminarCita(agenda, cita)
                 print(bcolors.OKGREEN + "\n¡Cita eliminada exitosamente!" + bcolors.ENDC)
-            i += 1
+            else:
+                i += 1
         if contador == 0:
             print(bcolors.FAIL + "No se encontró ninguna cita con esa obra social" + bcolors.ENDC)
-
 
     elif (option == 10):
         while True:
